@@ -1,5 +1,5 @@
 import threading
-from src.image.image import main
+from src.imageProcessing.image import main
 from src.algorithm.algorithm import algorithm
 
 

@@ -44,19 +44,22 @@ def processLanes(n):
 
 
 def takePhotos():
-    cameras = [0]
-    for i in cameras:
-        camera = cv2.VideoCapture(i)
-        if camera == None:
-            print("Camera not detected error")
-            exit(0)
-        _, img = camera.read()
-        cv2.imwrite(
-            "./images/lane" + str(i + 1) + "/2.png", img
-        )  # CHANGE TO 1.png for final use
-        # cv2.imshow("test", img)
-        # cv2.waitKey(0)
-        del camera
+    pass
+    # THIS CODE TAKES A PICTURE THROUGH DEFAULT CAMERA
+    # COMMENTED OUT FOR NOW SO RANDOM PICTURES OF YOU ARE NOT TAKEN EVERY TIME THE CODE IS RUN
+    # cameras = [0]
+    # for i in cameras:
+    #     camera = cv2.VideoCapture(i)
+    #     if camera == None:
+    #         print("Camera not detected error")
+    #         exit(0)
+    #     _, img = camera.read()
+    #     cv2.imwrite(
+    #         "./images/lane" + str(i + 1) + "/2.png", img
+    #     )  # CHANGE TO 1.png for final use
+    #     # cv2.imshow("test", img)
+    #     # cv2.waitKey(0)
+    #     del camera
 
 
 def main():
