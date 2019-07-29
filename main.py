@@ -1,11 +1,11 @@
 import threading
-from src.image.image import image
+from src.image.image import main
 from src.algorithm.algorithm import algorithm
 
 
 if __name__ == "__main__":
     t1 = threading.Thread(target=algorithm)
-    t2 = threading.Thread(target=image)
+    t2 = threading.Thread(target=main)
 
     t1.start()
     t2.start()
