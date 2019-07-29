@@ -29,7 +29,7 @@ def getDensity(base, image):
 
 
 def processLanes(n):
-	densities = []
+    densities = []
     for i in range(n):
         base = Image("./images/lane" + str(i + 1) + "/base.png")
         if base == None:
@@ -39,8 +39,8 @@ def processLanes(n):
         density = str(getDensity(base, image))
         print("Density of lane " + str(i + 1) + ": " + density)
         densities.append(density)
-        # Delete 1.png
-	return densities
+    # Delete 1.png
+    return densities
 
 
 def takePhotos():
@@ -63,11 +63,11 @@ def main():
     NUMBER_OF_LANES = 4
     INTERVAL_BETWEEN_SUCCESSIVE_CAPTURE = 5
     while True:
-		takePhotos()
-		densities = processLanes(NUMBER_OF_LANES)
-		for i in densities:
-			Signal.update_timings(i)
-		time.sleep(INTERVAL_BETWEEN_SUCCESSIVE_CAPTURE)
+        takePhotos()
+        densities = processLanes(NUMBER_OF_LANES)
+        for i in densities:
+            Signal.update_timings(i)
+        time.sleep(INTERVAL_BETWEEN_SUCCESSIVE_CAPTURE)
 
 
 if __name__ == "__main__":
