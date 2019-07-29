@@ -36,8 +36,8 @@ def processLanes(n):
             print("Base image not found error")
             exit(0)
         image = Image("./images/lane" + str(i + 1) + "/1.png")
-        density = str(getDensity(base, image))
-        print("Density of lane " + str(i + 1) + ": " + density)
+        density = getDensity(base, image)
+        print("Density of lane " + str(i + 1) + ": " + str(density))
         densities.append(density)
     # Delete 1.png
     return densities
@@ -68,8 +68,7 @@ def main():
     while True:
         takePhotos()
         densities = processLanes(NUMBER_OF_LANES)
-        for i in densities:
-            Signal.update_timings(i)
+        Signal.update_timings(densities)
         time.sleep(INTERVAL_BETWEEN_SUCCESSIVE_CAPTURE)
 
 
