@@ -1,8 +1,10 @@
 class Signal:
 	maximum = 90
 	standard = 60
-	minimum = 30
-	lanes = [0, 0, 0, 0]
+	minimum = 10
+	lanes = [20, 20, 20, 20]
+	emergency = False
+	target = 1
 	
 	@staticmethod
 	def update_timings(threshold):
