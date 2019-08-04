@@ -14,11 +14,11 @@ def algorithm():
             )
         )
         for i in range(curr_timing):
-            if(Signal.emergency):
+            if Signal.emergency:
                 while Signal.emergency:
                     print(
                         "Lane {0} is given green signal for {1} seconds".format(
-                            Signal.target, Signal.EMERGENCY_CONSTANT
+                            Signal.lane_with_emergency, Signal.EMERGENCY_CONSTANT
                         )
                     )
                     time.sleep(Signal.EMERGENCY_CONSTANT)

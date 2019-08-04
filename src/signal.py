@@ -4,9 +4,10 @@ class Signal:
     minimum = 10
     lanes = [20, 20, 20, 20]
     emergency = False
-    target = 1
+    lane_with_emergency = 1
     IMAGE_PROCESSING_FREQUENCY = 5
-    EMERGENCY_CONSTANT = 5	
+    EMERGENCY_CONSTANT = 5
+
     @staticmethod
     def update_timings(threshold):
         for i in range(4):
