@@ -6,8 +6,8 @@ def algorithm():
     # Wait to ensure image processing algorithm runs at least once
     time.sleep(Signal.IMAGE_PROCESSING_FREQUENCY)
     while True:
-        curr_timing = max(Signal.lanes)
-        curr_lane = Signal.lanes.index(curr_timing)
+        curr_lane = Signal.lanes_priority.index(max(Signal.lanes_priority))
+        curr_timing = Signal.lanes_timing[curr_lane]
         print(
             "Lane {0} is given green signal for {1} seconds".format(
                 curr_lane, curr_timing
