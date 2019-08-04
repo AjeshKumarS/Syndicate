@@ -5,6 +5,7 @@ class Signal:
 	lanes = [20, 20, 20, 20]
 	emergency = False
 	target = 1
+	IMAGE_PROCESSING_FREQUENCY = 5
 	
 	@staticmethod
 	def update_timings(threshold):
