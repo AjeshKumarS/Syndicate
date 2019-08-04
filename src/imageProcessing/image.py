@@ -64,12 +64,11 @@ def takePhotos():
 
 def main():
     NUMBER_OF_LANES = 4
-    INTERVAL_BETWEEN_SUCCESSIVE_CAPTURE = 5
     while True:
         takePhotos()
         densities = processLanes(NUMBER_OF_LANES)
         Signal.update_timings(densities)
-        time.sleep(INTERVAL_BETWEEN_SUCCESSIVE_CAPTURE)
+        time.sleep(Signal.IMAGE_PROCESSING_FREQUENCY)
 
 
 if __name__ == "__main__":
