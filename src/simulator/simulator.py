@@ -9,15 +9,24 @@ class Simulator:
     def gen_densities():
         densities = [0, 0, 0, 0]
         for i in range(4):
-            if Signal.lanes_priority[i] != 0:
-                densities[i] = Signal.lanes_densities[i] + \
-                    random.randrange(0, 50)
+            if i != Signal.curr_lane_to_open:
+                if Signal.lanes_densities[i] < 80:
+                    densities[i] = Signal.lanes_densities[i] + \
+                    random.randrange(0, 20)
+                else:
+                    densities[i]=100
             else:
-                # assuming approx 10 cars pass through each second
+                # assuming approx 3 cars pass through each second
                 # while the light is green
                 # TODO: optimize based on the timing calculation algo
                 densities[i] = Signal.lanes_densities[i] - \
-                    Signal.lanes_timing[i] * 10
+                    Signal.lanes_duration[Signal.curr_lane_to_open] * 3
+                if densities[i]<=Signal.lanes_duration[Signal.curr_lane_to_open] * 3:
+                    densities[i]=1
+                else:
+                    densities[i] = Signal.lanes_densities[i] - \
+                                   Signal.lanes_duration[Signal.curr_lane_to_open] * 3
+
         Signal.update_timings(densities)
 
     @staticmethod
@@ -26,6 +35,11 @@ class Simulator:
 
     @staticmethod
     def simulate():
+        densities = [0, 0, 0, 0]
+        for i in range(4):
+            densities[i] = random.randrange(0, 100)
+        Signal.update_timings(densities)
+
         gen_thread = threading.Thread(target=Simulator.gen_densities)
         algo_thread = threading.Thread(target=Simulator.run_algo)
 

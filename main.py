@@ -7,7 +7,7 @@ from src.simulator.simulator import Simulator
 
 
 if __name__ == "__main__":
-    if sys.argv[1] == "-sim":
+    if len(sys.argv) > 1 and sys.argv[1] == "-sim":
         Simulator.simulate()
     else:
         t1 = threading.Thread(target=algorithm)
