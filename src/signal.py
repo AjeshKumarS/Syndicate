@@ -17,7 +17,6 @@ class Signal:
     @staticmethod
     def calculate_priority(waiting_time, density):
         waiting_time_fraction = waiting_time/Signal.maximum_waiting_time
-        print((waiting_time_fraction*waiting_time_fraction + density)/10)
         return math.log((waiting_time_fraction*waiting_time_fraction + density)/10, 10)
 
     @staticmethod
@@ -44,4 +43,4 @@ class Signal:
     @staticmethod
     def timings():
         for i in range(4):
-            print("Lane {0}: {1}".format(i, Signal.lanes_timing[i]))
+            print("Lane {0}: {1}".format(i, Signal.lanes_duration[i]))

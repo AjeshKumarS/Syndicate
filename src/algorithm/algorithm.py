@@ -6,6 +6,7 @@ def algorithm():
     # Wait to ensure image processing algorithm runs at least once
     time.sleep(Signal.IMAGE_PROCESSING_FREQUENCY)
     while True:
+        # print("algo is goin to run" + str(Signal.curr_lane_to_open))
         curr_lane = Signal.curr_lane_to_open
         curr_timing = Signal.lanes_duration[curr_lane]
         print(
@@ -24,5 +25,7 @@ def algorithm():
                     time.sleep(Signal.EMERGENCY_CONSTANT)
                 break
             else:
-                time.sleep(1)
+                # time passed in reduced to 0.1 sec just for testing
+                time.sleep(0.1)
         Signal.update_priority(curr_timing, curr_lane)
+        # print("algo ran" + str(Signal.curr_lane_to_open))
