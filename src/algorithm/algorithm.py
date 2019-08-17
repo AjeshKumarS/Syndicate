@@ -6,14 +6,13 @@ def algorithm():
     # Wait to ensure image processing algorithm runs at least once
     time.sleep(Signal.IMAGE_PROCESSING_FREQUENCY)
     while True:
-        curr_lane = Signal.lanes_value.index(max(Signal.lanes_value))
-        curr_timing = Signal.lanes_timing[curr_lane]
+        curr_lane = Signal.curr_lane_to_open
+        curr_timing = Signal.lanes_duration[curr_lane]
         print(
             "Lane {0} is given green signal for {1} seconds".format(
                 curr_lane, curr_timing
             )
         )
-        Signal.lanes_priority[curr_lane] = 0
         for i in range(curr_timing):
             if Signal.emergency:
                 while Signal.emergency:
@@ -26,4 +25,4 @@ def algorithm():
                 break
             else:
                 time.sleep(1)
-        Signal.update_priority()
+        Signal.update_priority(curr_timing, curr_lane)
