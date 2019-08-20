@@ -1,18 +1,22 @@
 import time
 from ..signal import Signal
+from ..bolt.bolt import change_signal
 
 
 def algorithm():
     curr_lane = Signal.curr_lane_to_open
     curr_timing = Signal.lanes_duration[curr_lane]
+    change_signal(curr_lane)
     print(
         "Lane {0} is given green signal for {1} seconds".format(
             curr_lane, curr_timing
         )
     )
+    
     for i in range(curr_timing):
         if Signal.emergency:
             while Signal.emergency:
+                change_signal(Signal.lane_with_emergency)
                 print(
                     "Lane {0} is given green signal for {1} seconds".format(
                         Signal.lane_with_emergency, Signal.EMERGENCY_CONSTANT
