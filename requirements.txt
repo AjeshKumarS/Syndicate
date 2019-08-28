@@ -1,10 +1,10 @@
-boltiot==1.11
 certifi==2019.6.16
 chardet==3.0.4
 idna==2.8
 numpy==1.17.0
 opencv-contrib-python==4.1.0.25
 PyJWT==1.7.1
+pyserial==3.4
 PySocks==1.7.0
 pytz==2019.2
 requests==2.22.0
