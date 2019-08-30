@@ -1,5 +1,8 @@
 import cv2
 import time
+import urllib.request
+import numpy as np
+from ..config import CAMERA_URLS
 from ..signal import Signal
 
 
@@ -60,6 +63,13 @@ def takePhotos():
     #     # cv2.imshow("test", img)
     #     # cv2.waitKey(0)
     #     del camera
+    for url in CAMERA_URLS:
+        res = urllib.request.urlopen(url)
+        arr = np.asarray(bytearray(res.read()), dtype=np.uint8)
+        img = cv2.imdecode(arr, -1)
+        cv2.imwrite("./images/lane" + str(i + 1) + "/2.png", img)
+        cv2.imshow("img", img)
+        cv2.waitKey()
 
 
 def main():
