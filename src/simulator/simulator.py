@@ -6,7 +6,7 @@ from ..signal import Signal
 from enum import Enum
 
 
-density_reduction_rate = 2/20
+density_reduction_rate = 2/5
 
 
 class Simulator:
@@ -21,9 +21,6 @@ class Simulator:
                 else:
                     densities[i] = 100
             else:
-                # assuming approx 3 cars pass through each second
-                # while the light is green
-                # TODO: optimize based on the timing calculation algo
                 if densities[i] <= Signal.lanes_duration[Signal.curr_lane_to_open] * (density_reduction_rate):
                     densities[i] = 1
                 else:
@@ -31,7 +28,9 @@ class Simulator:
                         Signal.lanes_duration[Signal.curr_lane_to_open] * \
                         (density_reduction_rate)
 
-        Signal.update_timings(densities)
+        curr_lane = Signal.curr_lane_to_open
+        curr_timing = Signal.lanes_duration[curr_lane]
+        Signal.update_timings(densities, curr_lane, curr_timing)
 
     @staticmethod
     def run_algorithm():
@@ -57,19 +56,17 @@ class Simulator:
         sum_time_fixed = 0
         avg_fixed = 0.00
         no_of_cases = 1
-        fixed_duration = 120
+        fixed_duration = 40
         for i in range(no_of_cases):
             densities = [0, 0, 0, 0]
             for j in range(4):
                 densities[j] = random.randrange(5, 100)
-            print("densities : ", densities)
             Signal.update_timings(densities)
             algo_densities = densities[:]
             lanes_done = 0
             while lanes_done != 4:
                 curr_lane = Signal.curr_lane_to_open
                 curr_timing = Signal.lanes_duration[curr_lane]
-                print("clane: ", curr_lane, "ctime: ", curr_timing)
                 sum_time_algo += curr_timing
                 if algo_densities[curr_lane] > 0:
                     if algo_densities[curr_lane] - (density_reduction_rate) * curr_timing > 0:
@@ -79,15 +76,13 @@ class Simulator:
                         algo_densities[curr_lane] = 0
                     if algo_densities[curr_lane] <= 0:
                         lanes_done += 1
-                Signal.update_priority(curr_timing, curr_lane)
-                print("densities : ", algo_densities)
+                Signal.update_timings(algo_densities, curr_timing, curr_lane)
 
-            # Fixed : 30 sec for 1 lane
             lanes_done = 0
             while lanes_done != 4:
                 for j in range(len(densities)):
+                    sum_time_fixed += fixed_duration
                     if densities[j] > 0:
-                        sum_time_fixed += fixed_duration
                         if densities[j] - (density_reduction_rate) * fixed_duration > 0:
                             densities[j] = densities[j] - \
                                 (density_reduction_rate) * fixed_duration
@@ -95,8 +90,6 @@ class Simulator:
                             densities[j] = 0
                         if densities[j] <= 0:
                             lanes_done += 1
-                    print("dens,ities : ", densities)
-        print("sft: ", sum_time_fixed, "sat: ", sum_time_algo)
         avg_fixed = float(sum_time_fixed/no_of_cases)
         avg_algo = float(sum_time_algo/no_of_cases)
         print("Avg time taken to empty all lanes in")
