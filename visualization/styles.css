@@ -1,0 +1,35 @@
+body {
+  background-color: lightgray;
+}
+
+.lanes {
+  height: 400px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.percentDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 133px;
+  width: 133px;
+  font-size: 3rem;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: black;
+  color: white;
+}
+
+.rowOne {
+  display: flex;
+  justify-content: center;
+}
+.rowTwo {
+  display: flex;
+  justify-content: space-between;
+}
+.rowThree {
+  display: flex;
+  justify-content: center;
+}
