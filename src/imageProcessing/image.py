@@ -2,7 +2,6 @@ import cv2
 import time
 import urllib.request
 import numpy as np
-# from ..config import CAMERA_URLS
 from ..signal import Signal
 
 
@@ -49,23 +48,12 @@ def processLanes(n):
 
 
 def takePhotos():
-    # pass
-    # THIS CODE TAKES A PICTURE THROUGH DEFAULT CAMERA
-    # COMMENTED OUT FOR NOW SO RANDOM PICTURES OF YOU ARE NOT TAKEN EVERY TIME THE CODE IS RUN
-    # cameras = [0]
-    # for i in cameras:
-    #     camera = cv2.VideoCapture(i)
-    #     if camera == None:
-    #         print("Camera not detected error")
-    #         exit(0)
-    #     _, img = camera.read()
-    #     cv2.imwrite(
-    #         "./images/lane" + str(i + 1) + "/2.png", img
-    #     )  # CHANGE TO 1.png for final use
-    #     # cv2.imshow("test", img)
-    #     # cv2.waitKey(0)
-    #     del camera
-    CAMERA_URLS=["http://192.168.43.220:8080/photo.jpg","http://192.168.43.1:8080/photo.jpg", "http://192.168.43.231:8080/photo.jpg","http://192.168.43.65:8080/photo.jpg"]
+    CAMERA_URLS = [
+        "http://192.168.43.220:8080/photo.jpg",
+        "http://192.168.43.1:8080/photo.jpg",
+        "http://192.168.43.231:8080/photo.jpg",
+        "http://192.168.43.65:8080/photo.jpg",
+    ]
     for url in CAMERA_URLS:
         res = urllib.request.urlopen(url)
         arr = np.asarray(bytearray(res.read()), dtype=np.uint8)
