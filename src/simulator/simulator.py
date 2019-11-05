@@ -55,7 +55,7 @@ class Simulator:
         avg_algo = 0.00
         sum_time_fixed = 0
         avg_fixed = 0.00
-        no_of_cases = 1
+        no_of_cases = 100
         fixed_duration = 40
         for i in range(no_of_cases):
             densities = [0, 0, 0, 0]

@@ -2,7 +2,7 @@ import cv2
 import time
 import urllib.request
 import numpy as np
-from ..config import CAMERA_URLS
+# from ..config import CAMERA_URLS
 from ..signal import Signal
 
 
@@ -34,20 +34,22 @@ def getDensity(base, image):
 def processLanes(n):
     densities = []
     for i in range(n):
-        base = Image("./images/lane" + str(i + 1) + "/base.png")
+        base = Image("./images/lane" + str(i + 1) + "/base.jpg")
         if base == None:
             print("Base image not found error")
             exit(0)
-        image = Image("./images/lane" + str(i + 1) + "/1.png")
+        image = Image("./images/lane" + str(i + 1) + "/2.jpg")
+        if image == None:
+            print("Image capture returned None")
+            exit(0)
         density = getDensity(base, image)
         print("Density of lane " + str(i + 1) + ": " + str(density))
         densities.append(density)
-    # Delete 1.png
     return densities
 
 
 def takePhotos():
-    pass
+    # pass
     # THIS CODE TAKES A PICTURE THROUGH DEFAULT CAMERA
     # COMMENTED OUT FOR NOW SO RANDOM PICTURES OF YOU ARE NOT TAKEN EVERY TIME THE CODE IS RUN
     # cameras = [0]
@@ -63,13 +65,14 @@ def takePhotos():
     #     # cv2.imshow("test", img)
     #     # cv2.waitKey(0)
     #     del camera
+    CAMERA_URLS=["http://192.168.43.220:8080/photo.jpg","http://192.168.43.1:8080/photo.jpg", "http://192.168.43.231:8080/photo.jpg","http://192.168.43.65:8080/photo.jpg"]
     for url in CAMERA_URLS:
         res = urllib.request.urlopen(url)
         arr = np.asarray(bytearray(res.read()), dtype=np.uint8)
         img = cv2.imdecode(arr, -1)
-        cv2.imwrite("./images/lane" + str(i + 1) + "/2.png", img)
-        cv2.imshow("img", img)
-        cv2.waitKey()
+        cv2.imwrite("./images/lane" + str(CAMERA_URLS.index(url) + 1) + "/2.jpg", img)
+        # cv2.imshow("img", img)
+        # cv2.waitKey()
 
 
 def main():

@@ -1,7 +1,7 @@
 # import serial
 # import time
 #
-# ArduinoSerial = serial.Serial('com6', 9600)
+# ArduinoSerial = serial.Serial('/dev/ttyACM0', 9600)
 # time.sleep(2)
 #
 # print(ArduinoSerial.readline())
