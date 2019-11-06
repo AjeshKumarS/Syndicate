@@ -9,6 +9,7 @@ class Image:
     def __init__(self, path):
         self.img = cv2.imread(path)
         self.img = cv2.cvtColor(self.img, cv2.COLOR_BGR2GRAY)
+        (thresh, self.img) = cv2.threshold(base, 170, 255, cv2.THRESH_BINARY)
         self.height, self.width = self.img.shape
         self.pixelCount = self.height * self.width
 
@@ -23,7 +24,7 @@ class Image:
 
 
 def getDensity(base, image):
-    diff = cv2.subtract(image.getImage(), base.getImage())
+    diff = cv2.subtract(base.getImage(), image.getImage())
     nonBlackPixels = cv2.countNonZero(diff)
     total = image.getPixelCount()
     density = (nonBlackPixels * 100) / total
