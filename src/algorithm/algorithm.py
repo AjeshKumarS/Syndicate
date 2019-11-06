@@ -29,8 +29,8 @@ def algorithm():
             break
         else:
             # time passed in reduced to 0.3 sec just for testing
-            time.sleep(0.3)
-    Signal.update_timings(curr_timing, curr_lane)
+            time.sleep(0.03)
+    Signal.update_timings([], curr_timing, curr_lane)
 
 
 def run_algorithm():
