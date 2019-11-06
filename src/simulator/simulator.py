@@ -40,6 +40,12 @@ class Simulator:
         time.sleep(Signal.IMAGE_PROCESSING_FREQUENCY)
         while True:
             algorithm()
+            den = Signal.lanes_densities
+            BASE_URL = "http://127.0.0.1:5000/setDensities?"
+            URL = BASE_URL
+            for i in range(4):
+                URL = URL + "l" + str(i + 1) + "=" + str(den[i]) + "&"
+            res = urllib.request.urlopen(URL)
             Simulator.gen_densities()
 
     @staticmethod
@@ -53,14 +59,7 @@ class Simulator:
 
     @staticmethod
     def simulate_with_visuals():
-        BASE_URL = "http://127.0.0.1:5000/setDensities?"
         densities = [0, 0, 0, 0]
-        URL = BASE_URL
-        for i in range(4):
-            densities[i] = random.randrange(5, 100)
-            URL = URL + "l" + str(i + 1) + "=" + str(densities[i]) + "&"
-        res = urllib.request.urlopen(URL)
-        print(res)
         Signal.update_timings(densities)
         Simulator.run_algorithm()
 
