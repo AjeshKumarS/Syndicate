@@ -22,14 +22,18 @@ class Signal:
 
     @staticmethod
     def update_timings(densities, waiting_duration=None, lane_not_waiting=None):
-        Signal.lanes_densities = densities
+        print(Signal.lanes_waiting_time, Signal.lanes_densities)
+        if not (densities == []):
+            Signal.lanes_densities = densities
         if waiting_duration == None or lane_not_waiting == None:
             for i in range(4):
                 priority = Signal.calculate_priority(
-                    Signal.lanes_waiting_time[i], Signal.lanes_densities[i])
+                    Signal.lanes_waiting_time[i], Signal.lanes_densities[i]
+                )
                 Signal.lanes_priority[i] = priority
-                Signal.lanes_duration[i] = int(max(
-                    1.5 * Signal.lanes_densities[i], Signal.minimum_green_duration))
+                Signal.lanes_duration[i] = int(
+                    max(1.5 * Signal.lanes_densities[i], Signal.minimum_green_duration)
+                )
         else:
             for i in range(4):
                 if i != lane_not_waiting:
@@ -37,13 +41,16 @@ class Signal:
                 if i == lane_not_waiting:
                     Signal.lanes_waiting_time[i] = 0
                 priority = Signal.calculate_priority(
-                    Signal.lanes_waiting_time[i], Signal.lanes_densities[i])
+                    Signal.lanes_waiting_time[i], Signal.lanes_densities[i]
+                )
                 Signal.lanes_priority[i] = priority
-                Signal.lanes_duration[i] = int(max(
-                    0.6 * Signal.lanes_densities[i], Signal.minimum_green_duration))
+                Signal.lanes_duration[i] = int(
+                    max(0.6 * Signal.lanes_densities[i], Signal.minimum_green_duration)
+                )
         Signal.prev_lane_that_was_open = Signal.curr_lane_to_open
         Signal.curr_lane_to_open = Signal.lanes_priority.index(
-            max(Signal.lanes_priority))
+            max(Signal.lanes_priority)
+        )
 
     # @staticmethod
     # def update_priority(, densities):
