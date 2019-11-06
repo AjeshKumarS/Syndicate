@@ -30,7 +30,7 @@ def algorithm():
         else:
             # time passed in reduced to 0.3 sec just for testing
             time.sleep(0.3)
-    Signal.update_priority(curr_timing, curr_lane)
+    Signal.update_timings(curr_timing, curr_lane)
 
 
 def run_algorithm():
