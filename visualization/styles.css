@@ -2,6 +2,12 @@ body {
   background-color: lightgray;
 }
 
+.mainWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
 .lanes {
   height: 400px;
   width: 400px;

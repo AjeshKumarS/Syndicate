@@ -7,14 +7,14 @@ def algorithm():
     curr_lane = Signal.curr_lane_to_open
     curr_timing = Signal.lanes_duration[curr_lane]
     change_signal(curr_lane)
-    print(Signal.lanes_densities, Signal.lanes_waiting_time)
+    print("Densities: ", Signal.lanes_densities)
     print(
         "Lane {0} is given green signal for {1} seconds".format(
             curr_lane + 1, curr_timing
         )
     )
-    print("Prio : ", Signal.lanes_priority)
-    print("WT : ", Signal.lanes_waiting_time)
+    print("Priority : ", Signal.lanes_priority)
+    print("Waiting Time : ", Signal.lanes_waiting_time)
 
     for i in range(curr_timing):
         if Signal.emergency:
@@ -29,7 +29,7 @@ def algorithm():
             break
         else:
             # time passed in reduced to 0.3 sec just for testing
-            time.sleep(0.03)
+            time.sleep(0.3)
     Signal.update_timings([], curr_timing, curr_lane)
 
 
