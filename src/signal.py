@@ -22,7 +22,6 @@ class Signal:
 
     @staticmethod
     def update_timings(densities, waiting_duration=None, lane_not_waiting=None):
-        print(Signal.lanes_waiting_time, Signal.lanes_densities)
         if not (densities == []):
             Signal.lanes_densities = densities
         if waiting_duration == None or lane_not_waiting == None:
@@ -32,7 +31,8 @@ class Signal:
                 )
                 Signal.lanes_priority[i] = priority
                 Signal.lanes_duration[i] = int(
-                    max(1.5 * Signal.lanes_densities[i], Signal.minimum_green_duration)
+                    max(1.5 * Signal.lanes_densities[i],
+                        Signal.minimum_green_duration)
                 )
         else:
             for i in range(4):
@@ -45,7 +45,8 @@ class Signal:
                 )
                 Signal.lanes_priority[i] = priority
                 Signal.lanes_duration[i] = int(
-                    max(0.6 * Signal.lanes_densities[i], Signal.minimum_green_duration)
+                    max(0.6 * Signal.lanes_densities[i],
+                        Signal.minimum_green_duration)
                 )
         Signal.prev_lane_that_was_open = Signal.curr_lane_to_open
         Signal.curr_lane_to_open = Signal.lanes_priority.index(

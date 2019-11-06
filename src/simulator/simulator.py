@@ -72,7 +72,7 @@ class Simulator:
         avg_algo = 0.00
         sum_time_fixed = 0
         avg_fixed = 0.00
-        no_of_cases = 100
+        no_of_cases = 1
         fixed_duration = 40
         for i in range(no_of_cases):
             densities = [0, 0, 0, 0]
@@ -80,6 +80,7 @@ class Simulator:
                 densities[j] = random.randrange(5, 100)
             Signal.update_timings(densities)
             algo_densities = densities[:]
+            print(algo_densities)
             lanes_done = 0
             while lanes_done != 4:
                 curr_lane = Signal.curr_lane_to_open
@@ -97,10 +98,14 @@ class Simulator:
                         )
                     else:
                         algo_densities[curr_lane] = 0
+                    time.sleep(2)
+                    print(algo_densities)
                     if algo_densities[curr_lane] <= 0:
                         lanes_done += 1
                 Signal.update_timings(algo_densities, curr_timing, curr_lane)
 
+            print()
+            print(densities)
             lanes_done = 0
             while lanes_done != 4:
                 for j in range(len(densities)):
@@ -111,6 +116,8 @@ class Simulator:
                                 (density_reduction_rate) * fixed_duration
                         else:
                             densities[j] = 0
+                        time.sleep(2)
+                        print(densities)
                         if densities[j] <= 0:
                             lanes_done += 1
         avg_fixed = float(sum_time_fixed/no_of_cases)
