@@ -15,20 +15,20 @@ class Simulator:
     def gen_densities():
         densities = [0, 0, 0, 0]
         for i in range(4):
-            if i != Signal.curr_lane_to_open:
-                if Signal.lanes_densities[i] < 80:
-                    densities[i] = Signal.lanes_densities[i] + random.randrange(0, 20)
-                else:
-                    densities[i] = 100
+            # if i != Signal.curr_lane_to_open:
+            #     if Signal.lanes_densities[i] < 80:
+            #         densities[i] = Signal.lanes_densities[i] + random.randrange(0, 20)
+            #     else:
+            #         densities[i] = 100
+            # else:
+            if densities[i] <= Signal.lanes_duration[Signal.curr_lane_to_open] * (
+                density_reduction_rate
+            ):
+                densities[i] = 1
             else:
-                if densities[i] <= Signal.lanes_duration[Signal.curr_lane_to_open] * (
-                    density_reduction_rate
-                ):
-                    densities[i] = 1
-                else:
-                    densities[i] = Signal.lanes_densities[i] - Signal.lanes_duration[
-                        Signal.curr_lane_to_open
-                    ] * (density_reduction_rate)
+                densities[i] = Signal.lanes_densities[i] - Signal.lanes_duration[
+                    Signal.curr_lane_to_open
+                ] * (density_reduction_rate)
 
         curr_lane = Signal.curr_lane_to_open
         curr_timing = Signal.lanes_duration[curr_lane]
@@ -40,26 +40,21 @@ class Simulator:
         time.sleep(Signal.IMAGE_PROCESSING_FREQUENCY)
         while True:
             algorithm()
-            den = Signal.lanes_densities
-            BASE_URL = "http://127.0.0.1:5000/setDensities?"
-            URL = BASE_URL
-            for i in range(4):
-                URL = URL + "l" + str(i + 1) + "=" + str(den[i]) + "&"
-            res = urllib.request.urlopen(URL)
             Simulator.gen_densities()
 
     @staticmethod
     def simulate():
         densities = [0, 0, 0, 0]
         for i in range(4):
-            densities[i] = random.randrange(5, 100)
+            densities[i] = random.randrange(50, 100)
         Signal.update_timings(densities)
-
         Simulator.run_algorithm()
 
     @staticmethod
     def simulate_with_visuals():
         densities = [0, 0, 0, 0]
+        for i in range(4):
+            densities[i] = random.randrange(50, 100)
         Signal.update_timings(densities)
         Simulator.run_algorithm()
 
@@ -69,16 +64,24 @@ class Simulator:
         avg_algo = 0.00
         sum_time_fixed = 0
         avg_fixed = 0.00
-        no_of_cases = 100
+        no_of_cases = 1
         fixed_duration = 40
+
         for i in range(no_of_cases):
             densities = [0, 0, 0, 0]
             for j in range(4):
-                densities[j] = random.randrange(5, 100)
+                densities[j] = random.randrange(50, 100)
             Signal.update_timings(densities)
             algo_densities = densities[:]
             lanes_done = 0
             while lanes_done != 4:
+                den = Signal.lanes_densities
+                BASE_URL = "http://127.0.0.1:5000/setDensities?"
+                URL = BASE_URL
+                for i in range(4):
+                    URL = URL + "l" + str(i + 1) + "=" + str(den[i]) + "&"
+                res = urllib.request.urlopen(URL)
+
                 curr_lane = Signal.curr_lane_to_open
                 curr_timing = Signal.lanes_duration[curr_lane]
                 sum_time_algo += curr_timing
@@ -97,9 +100,17 @@ class Simulator:
                     if algo_densities[curr_lane] <= 0:
                         lanes_done += 1
                 Signal.update_timings(algo_densities, curr_timing, curr_lane)
+                time.sleep(0.5)
 
             lanes_done = 0
             while lanes_done != 4:
+                print(densities)
+                den = densities
+                BASE_URL = "http://127.0.0.1:5000/setFixed?"
+                URL = BASE_URL
+                for i in range(4):
+                    URL = URL + "l" + str(i + 1) + "=" + str(den[i]) + "&"
+                res = urllib.request.urlopen(URL)
                 for j in range(len(densities)):
                     sum_time_fixed += fixed_duration
                     if densities[j] > 0:
@@ -111,6 +122,7 @@ class Simulator:
                             densities[j] = 0
                         if densities[j] <= 0:
                             lanes_done += 1
+                time.sleep(0.5)
         avg_fixed = float(sum_time_fixed / no_of_cases)
         avg_algo = float(sum_time_algo / no_of_cases)
         print("Avg time taken to empty all lanes in")

@@ -22,7 +22,8 @@ class Signal:
 
     @staticmethod
     def update_timings(densities, waiting_duration=None, lane_not_waiting=None):
-        print(Signal.lanes_waiting_time, Signal.lanes_densities)
+        print("Waiting Time:", Signal.lanes_waiting_time)
+        print("Densities", Signal.lanes_densities)
         if not (densities == []):
             Signal.lanes_densities = densities
         if waiting_duration == None or lane_not_waiting == None:
